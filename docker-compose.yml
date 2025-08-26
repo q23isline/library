@@ -1,0 +1,12 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/local/php/Dockerfile
+    container_name: app
+    ports:
+      - 8765:8765
+    volumes:
+      - ./app:/src
+      # https://windows.php.net/download#php-8.4
+      - ./docker/local/php/php.ini:/usr/local/etc/php/php.ini

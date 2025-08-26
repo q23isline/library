@@ -30,4 +30,9 @@ RUN docker-php-ext-install simplexml
 # MySQL へ DB 保存する拡張機能
 RUN docker-php-ext-install pdo_mysql
 
+# デバッグ実行できるようにする
+# https://xdebug.org/docs/install#pecl
+RUN pecl install xdebug
+RUN docker-php-ext-enable xdebug
+
 WORKDIR /src

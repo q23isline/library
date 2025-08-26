@@ -28,7 +28,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '__SALT__'),
+        'salt' => env('SECURITY_SALT', '674f63d37681a4195250d400c209f37bec483303f337c351f7244238d8cadc1f'),
     ],
 
     /*
@@ -39,7 +39,8 @@ return [
      */
     'Datasources' => [
         'default' => [
-            'host' => 'localhost',
+            // Docker コンテナ名
+            'host' => 'db',
             /*
              * CakePHP will use the default DB port based on the driver selected
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
@@ -47,10 +48,12 @@ return [
              */
             //'port' => 'non_standard_port_number',
 
-            'username' => 'my_app',
-            'password' => 'secret',
+            'username' => 'root',
+            // MySQL コンテナで指定したパスワード
+            'password' => 'root',
 
-            'database' => 'my_app',
+            // MySQL コンテナで指定した DB 名
+            'database' => 'library',
             /*
              * If not using the default 'public' schema with the PostgreSQL driver
              * set it here.

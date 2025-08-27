@@ -1,0 +1,31 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Test\Fixture;
+
+use Cake\TestSuite\Fixture\TestFixture;
+
+/**
+ * BooksFixture
+ */
+class BooksFixture extends TestFixture
+{
+    /**
+     * Init method
+     *
+     * @return void
+     */
+    public function init(): void
+    {
+        $this->records = [
+            [
+                'id' => 1,
+                'name' => 'Lorem ipsum dolor sit amet',
+                'author' => 'Lorem ipsum dolor sit amet',
+                'created' => '2025-08-27 13:02:11',
+                'modified' => '2025-08-27 13:02:11',
+            ],
+        ];
+        parent::init();
+    }
+}

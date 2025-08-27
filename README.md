@@ -81,7 +81,13 @@ docker compose down
 
 #### バックエンド
 
-<http://localhost:8765/>
+<http://localhost:8765/login>
+
+#### ログイン情報
+
+| Email               | Password |
+| ------------------- | -------- |
+| <admin@example.com> | admin00  |
 
 ## Permission Deniedエラーが出た時の解決方法
 

@@ -5,7 +5,6 @@ namespace App\Controller;
 
 /**
  * Sessions Controller
- *
  */
 class SessionsController extends AppController
 {
@@ -13,12 +12,13 @@ class SessionsController extends AppController
      * Login method
      *
      * @return \Cake\Http\Response|null|void Redirects on successful login, renders view otherwise.
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
      */
     public function login()
     {
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
-        if ($result->isValid()) {
+        if ($result?->isValid()) {
             $this->Flash->success(__('Login successful'));
             $redirect = $this->Authentication->getLoginRedirect();
             if ($redirect) {

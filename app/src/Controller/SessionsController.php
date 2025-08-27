@@ -3,11 +3,26 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Event\EventInterface;
+
 /**
  * Sessions Controller
  */
 class SessionsController extends AppController
 {
+    /**
+     * @param \Cake\Event\EventInterface<\Cake\Controller\Controller> $event
+     * @return void
+     * @link https://book.cakephp.org/5/en/tutorials-and-examples/cms/authentication.html
+     */
+    public function beforeFilter(EventInterface $event): void
+    {
+        parent::beforeFilter($event);
+        // Configure the login action to not require authentication, preventing
+        // the infinite redirect loop issue
+        $this->Authentication->addUnauthenticatedActions(['login']);
+    }
+
     /**
      * Login method
      *
@@ -20,7 +35,8 @@ class SessionsController extends AppController
         $result = $this->Authentication->getResult();
         if ($result?->isValid()) {
             $this->Flash->success(__('Login successful'));
-            $redirect = $this->Authentication->getLoginRedirect();
+            // リダイレクト先の指定がクエリパラメーターでされていなければトップにリダイレクトする
+            $redirect = $this->Authentication->getLoginRedirect() ?? '/';
             if ($redirect) {
                 return $this->redirect($redirect);
             }
@@ -29,6 +45,23 @@ class SessionsController extends AppController
         // Display error if user submitted and authentication failed
         if ($this->request->is('post')) {
             $this->Flash->error(__('Invalid username or password'));
+        }
+    }
+
+    /**
+     * ログアウトする
+     *
+     * @return \Cake\Http\Response|null|void
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint
+     */
+    public function logout()
+    {
+        $result = $this->Authentication->getResult();
+        // regardless of POST or GET, redirect if user is logged in
+        if ($result && $result->isValid()) {
+            $this->Authentication->logout();
+
+            return $this->redirect(['controller' => 'Sessions', 'action' => 'login']);
         }
     }
 }
